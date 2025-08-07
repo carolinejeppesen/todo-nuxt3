@@ -5,7 +5,8 @@
         <button @click="addTask" class="bg-gray-300 px-4 py-2 mt-4">Add</button>
         <ul>
             <li v-for="(task, index) in tasks" :key="index">
-                {{ task.text }}
+                <input type="checkbox" v-model="task.done" />
+                <span :class="{ done: task.done }">{{ task.text }}</span>
             </li>
         </ul>
     </div>
@@ -22,3 +23,10 @@ const addTask = () => {
   }
 }
 </script>
+
+<style>
+    .done {
+    text-decoration: line-through;
+    color: gray;
+    }
+</style>
