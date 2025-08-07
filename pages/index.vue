@@ -7,8 +7,10 @@
             <li v-for="(task, index) in tasks" :key="index">
                 <input type="checkbox" v-model="task.done" />
                 <span :class="{ done: task.done }">{{ task.text }}</span>
+                <button @click="deleteTask(index)">X</button>
             </li>
         </ul>
+
     </div>
 </template>
 
@@ -22,6 +24,11 @@ const addTask = () => {
     newTask.value = ''
   }
 }
+
+const deleteTask = (index) => {
+  tasks.value.splice(index, 1)
+}
+
 </script>
 
 <style>
@@ -30,3 +37,4 @@ const addTask = () => {
     color: gray;
     }
 </style>
+
