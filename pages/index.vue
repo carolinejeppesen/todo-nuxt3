@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="text-4xl font-bold text-blue-300">Todo List</h1>
-        <input v-model="newTask" class="border border-gray-300 rounded px-4 py-2 mt-4 w-full"
+        <input v-model="newTask" @keyup.enter="addTask" class="border border-gray-300 rounded px-4 py-2 mt-4 w-full"
             placeholder="Add a new todo" />
         <button @click="addTask" class="bg-gray-300 rounded px-4 py-2 mt-4">
             Add
@@ -42,11 +42,13 @@ const addTask = () => {
             editing: false,
         });
         newTask.value = "";
+        saveTasks();
     }
 };
 
 const deleteTask = (index) => {
     tasks.value.splice(index, 1);
+    saveTasks();
 };
 
 const editTask = async (task, index) => {
@@ -62,5 +64,21 @@ const doneEditing = (task) => {
         task.text = "Untitled task";
     }
     task.editing = false;
+    saveTasks();
 };
+
+const saveTasks = () => {
+  localStorage.setItem('tasks', JSON.stringify(tasks.value))
+}
+
+const loadTasks = () => {
+  const saved = localStorage.getItem('tasks')
+  if (saved) tasks.value = JSON.parse(saved)
+}
+
+watch(tasks, () => {
+    saveTasks();
+}, { deep: true });
+
+onMounted(loadTasks)
 </script>
