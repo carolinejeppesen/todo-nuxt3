@@ -56,7 +56,8 @@ const tasks = ref([]);
 const newTask = ref("");
 const taskRefs = ref({});
 
-const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36)
+const uid = () =>
+  Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 
 const addTask = () => {
   const text = newTask.value.trim();
@@ -82,19 +83,19 @@ const deleteTask = (id) => {
 };
 
 const editTask = async (id) => {
-    const t = tasks.value.find(t => t.id === id)
-    if (!t) return
-    t.editing = true
-    await nextTick()
-    taskRefs.value[id]?.focus()
+  const t = tasks.value.find((t) => t.id === id);
+  if (!t) return;
+  t.editing = true;
+  await nextTick();
+  taskRefs.value[id]?.focus();
 };
 
 const doneEditing = (id) => {
-    const t = tasks.value.find(t => t.id === id)
-    if (!t) return
-    t.text = t.text.trim() || "Untitled Task";
-    t.editing = false;
-    saveTasks()
+  const t = tasks.value.find((t) => t.id === id);
+  if (!t) return;
+  t.text = t.text.trim() || "Untitled Task";
+  t.editing = false;
+  saveTasks();
 };
 
 const saveTasks = () => {
