@@ -10,43 +10,30 @@
     <button @click="addTask" class="bg-gray-300 rounded px-4 py-2 mt-4">
       Add
     </button>
+    <h2 class="mt-4 font-semibold">Current Todos</h2>
     <ul>
-      <li
-        v-for="task in sortedTasks"
+      <TaskRow 
+        v-for="task in activeTasksSorted"
         :key="task.id"
-        class="flex items-center space-x-2 mt-2"
-      >
-        <input type="checkbox" v-model="task.done" />
+        :task="task"
+        @toggle="toggleDone"
+        @edit="editTask"
+        @doneEditing="doneEditing"
+        @delete="deleteTask"
+      />
+    </ul>
 
-        <input
-          v-if="task.editing"
-          v-model="task.text"
-          :ref="
-            (el) => {
-              if (el) taskRefs[task.id] = el;
-            }
-          "
-          @blur="doneEditing(task.id)"
-          @keyup.enter="doneEditing(task.id)"
-          class="flex-1 px-2 py-1 border border-yellow-500 bg-yellow-100 rounded focus:outline-none"
+    <h2 class="mt-8 font-semibold">Finished</h2>
+    <ul>
+      <TaskRow 
+        v-for="task in finishedTasksSorted"
+        :key="task.id"
+        :task="task"
+        @toggle="toggleDone"
+        @edit="editTask"
+        @doneEditing="doneEditing"
+        @delete="deleteTask"
         />
-
-        <span
-          v-else
-          :class="{ 'line-through text-gray-400': task.done }"
-          class="flex-1 cursor-pointer"
-        >
-          {{ task.text }}
-        </span>
-
-        <button
-          @click="editTask(task.id)"
-          class="text-blue-500 hover:text-blue-700"
-        >
-          ✏️
-        </button>
-        <button @click="deleteTask(task.id)">X</button>
-      </li>
     </ul>
   </div>
 </template>
@@ -68,13 +55,20 @@ const addTask = () => {
     done: false,
     editing: false,
     createdAt: Date.now(),
+    completedAt: null,
   });
   newTask.value = "";
   saveTasks();
 };
 
-const sortedTasks = computed(() =>
-  tasks.value.slice().sort((a, b) => b.createdAt - a.createdAt)
+const activeTasksSorted = computed(() =>
+  tasks.value.filter((t) => !t.done).sort((a, b) => b.createdAt - a.createdAt)
+);
+
+const finishedTasksSorted = computed(() =>
+  tasks.value
+    .filter((t) => t.done)
+    .sort((a, b) => (b.completedAt ?? 0) - (a.completedAt ?? 0))
 );
 
 const deleteTask = (id) => {
@@ -107,6 +101,11 @@ const loadTasks = () => {
   if (!saved) return;
   const parsed = JSON.parse(saved);
   tasks.value = parsed;
+};
+
+const toggleDone = (task) => {
+  task.done = !task.done;
+  task.completedAt = task.done ? Date.now() : null;
 };
 
 watch(tasks, saveTasks, { deep: true });
