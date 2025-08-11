@@ -8,7 +8,7 @@
     <input
       v-if="task.editing"
       v-model="task.text"
-      :ref="inputEl"
+      ref="inputEl"
       @blur="$emit('doneEditing', task.id)"
       @keyup.enter="$emit('doneEditing', task.id)"
       class="flex-1 px-2 py-1 border border-yellow-500 bg-yellow-100 rounded focus:outline-none"
