@@ -34,7 +34,6 @@
 <script setup>
 const props = defineProps({
     task: { type: Object, required: true },
-    finished: { type: Boolean, default: false },
 })
 
 const inputEl = ref(null)
