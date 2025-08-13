@@ -11,19 +11,19 @@
       ref="inputEl"
       @blur="$emit('doneEditing', task.id)"
       @keyup.enter="$emit('doneEditing', task.id)"
-      class="flex-1 px-2 py-1 border border-yellow-500 bg-yellow-100 rounded focus:outline-none"
+      class="flex-1 px-2 py-1 border border-yellow-500 bg-yellow-100 rounded focus:outline-none w-96"
     />
     <span
       v-else
       :class="{ 'line-through text-gray-400': task.done }"
-      class="flex-1 cursor-pointer"
+      class="flex-1 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded"
     >
       {{ task.text }}
     </span>
 
     <button
       @click="$emit('edit', task.id)"
-      class="text-blue-500 hover:text-blue-700"
+      class=""
     >
       ✏️
     </button>

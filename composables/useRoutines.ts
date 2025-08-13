@@ -61,6 +61,30 @@ export const useRoutines = () => {
     showRoutineForm.value = false;
     saveCategories();
   };
+
+  // Deleting 
+  const deleteCategory = (categoryId: string) => {
+    categories.value = categories.value.filter(cat => cat.id !== categoryId)
+    saveCategories()
+  };
+
+  const deleteRoutine = (categoryId: string, routineId: string) => {
+    const category = categories.value.find(cat => cat.id === categoryId);
+    if (!category) return;
+    category.routines = category.routines.filter(r => r.id !== routineId);
+    saveCategories();
+  };
+
+const deleteRoutineTask = (categoryId: string, routineId: string, taskId: string) => {
+  const category = categories.value.find(cat => cat.id === categoryId)
+  if (!category) return
+  const routine = category.routines.find(r => r.id === routineId)
+  if (!routine) return
+  routine.tasks = routine.tasks.filter(task => task.id !== taskId)
+  saveCategories()
+}
+
+
   watch(categories, saveCategories, { deep: true });
   onMounted(loadCategories);
 
@@ -70,6 +94,9 @@ export const useRoutines = () => {
     handleRoutineSave,
     saveCategories,
     loadCategories,
-    findOrCreateCategory
+    findOrCreateCategory,
+    deleteCategory,
+    deleteRoutine,
+    deleteRoutineTask,
   };
 };

@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class ="max-w-3xl mx-auto p-6">
     <h1 class="text-4xl font-bold text-blue-300">Todo List</h1>
 
     <!-- New task -->
     <input
       v-model="newTask"
       @keyup.enter="addTask"
-      class="border border-gray-300 rounded px-4 py-2 mt-4 w-full"
+      class="border border-gray-300 rounded px-4 py-2 mt-4 w-96"
       placeholder="Add a new todo"
     />
-    <button @click="addTask" class="bg-gray-300 rounded px-4 py-2 mt-4">
+    <button @click="addTask" class="bg-gray-300 rounded px-4 py-2 mt-4 ml-4 w-24">
       Add
     </button>
 
@@ -56,7 +56,12 @@
       @cancel="showRoutineForm = false"
     />
 
-    <CategoryList :categories="categories" @add-to-today="addRoutineToToday" />
+    <CategoryList 
+    :categories="categories" 
+    @add-to-today="addRoutineToToday"
+    @delete-category="deleteCategory"
+    @delete-routine="deleteRoutine"
+    @delete-task="deleteRoutineTask"/>
   </div>
 </template>
 
@@ -81,6 +86,9 @@ const {
   loadCategories,
   findOrCreateCategory,
   handleRoutineSave,
+  deleteCategory,
+  deleteRoutine,
+  deleteRoutineTask,
 } = useRoutines();
 
 const addRoutineToToday = (routine) => {
