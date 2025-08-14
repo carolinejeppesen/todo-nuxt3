@@ -5,6 +5,7 @@ interface Task {
   editing: boolean;
   createdAt: number;
   completedAt: number | null;
+  taskDate: string;
 }
 
 export const useTasks = () => {
@@ -14,8 +15,9 @@ export const useTasks = () => {
   const uid = (): string =>
     Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 
-  const addTask = () => {
+  const addTask = (todayOrTomorrow: string) => {
     const text = newTask.value.trim();
+    const dueDate = todayOrTomorrow === 'today' ? getTodayDate() : getTomorrowDate();
     if (!text) return;
     tasks.value.push({
       id: uid(),
@@ -24,10 +26,32 @@ export const useTasks = () => {
       editing: false,
       createdAt: Date.now(),
       completedAt: null,
+      taskDate: dueDate
     });
     newTask.value = "";
     saveTasks();
   };
+
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toLocaleDateString("en-gb")
+  }
+
+  const getTomorrowDate = () => {
+    let tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toLocaleDateString("en-gb")
+  }
+
+  const todayTasksSorted = computed(() => {
+    return tasks.value.filter(t => t.taskDate === getTodayDate() && !t.done)
+      .sort((a, b) => b.createdAt - a.createdAt);
+  });
+
+  const tomorrowTasksSorted = computed(() => {
+    return tasks.value.filter(t => t.taskDate === getTomorrowDate() && !t.done)
+      .sort((a, b) => b.createdAt - a.createdAt);
+  });
 
   const activeTasksSorted = computed(() =>
     tasks.value.filter((t) => !t.done).sort((a, b) => b.createdAt - a.createdAt)
@@ -89,5 +113,6 @@ export const useTasks = () => {
     doneEditing,
     toggleDone,
     uid,
+    saveTasks,
   };
 };
