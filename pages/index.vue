@@ -2,6 +2,14 @@
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-sky-50">
     <div class="max-w-4xl mx-auto p-8">
       <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-blue-100 p-8">
+        <div class="flex items-center justify-between mb-6">
+          <NuxtLink
+            to="/today"
+            class="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Go to Todays todos
+          </NuxtLink>
+        </div>
         <!-- New task -->
         <div class=" mb-6">
           <div class="flex gap-3">
@@ -11,8 +19,8 @@
               class="flex-1 border-2 border-blue-200 rounded-xl px-6 py-3 bg-white/90 backdrop-blur-sm focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 placeholder-blue-400"
               placeholder="Add a new todo..."
             />
-            <button 
-              @click="addTask" 
+            <button
+              @click="addTask"
               class="bg-pink-300 text-white rounded-xl px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
             >
               Add
@@ -89,11 +97,15 @@
             :editing-routine="editingRoutine"
             :editing-category-name="editingCategoryName"
             @save="handleRoutineSave"
-            @cancel="showRoutineForm = false; editingRoutine = null; editingCategoryName = ''"
+            @cancel="
+              showRoutineForm = false;
+              editingRoutine = null;
+              editingCategoryName = '';
+            "
           />
 
-          <CategoryList 
-            :categories="categories" 
+          <CategoryList
+            :categories="categories"
             @add-to-today="addRoutineToToday"
             @delete-category="deleteCategory"
             @delete-routine="deleteRoutine"
@@ -108,7 +120,7 @@
 
 <script setup>
 const {
- newTask,
+  newTask,
   addTask,
   activeTasksSorted,
   finishedTasksSorted,
