@@ -17,7 +17,7 @@
           ref="inputEl"
           @blur="$emit('doneEditing', task.id)"
           @keyup.enter="$emit('doneEditing', task.id)"
-          class="w-full px-4 py-2 bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-300 rounded-xl transition-all duration-200 font-medium text-gray-800"
+          class="w-full px-4 py-2 bg-amber-50 rounded-xl transition-all duration-200 font-light text-gray-800"
         />
         <span
           v-else
