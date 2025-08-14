@@ -6,10 +6,10 @@
     <input
       v-model="newTask"
       @keyup.enter="addTask"
-      class="border border-gray-300 rounded px-4 py-2 mt-4 w-96"
+      class="border border-gray-300 rounded px-4 py-2 mt-4 w-4/5"
       placeholder="Add a new todo"
     />
-    <button @click="addTask" class="bg-gray-300 rounded px-4 py-2 mt-4 ml-4 w-24">
+    <button @click="addTask" class="bg-gray-300 rounded px-4 py-2 mt-4 ml-4 w-1/6">
       Add
     </button>
 
@@ -52,8 +52,10 @@
 
     <RoutineForm
       v-if="showRoutineForm"
+      :editing-routine="editingRoutine"
+      :editing-category-name="editingCategoryName"
       @save="handleRoutineSave"
-      @cancel="showRoutineForm = false"
+      @cancel="showRoutineForm = false; editingRoutine = null; editingCategoryName = ''"
     />
 
     <CategoryList 
@@ -61,7 +63,8 @@
     @add-to-today="addRoutineToToday"
     @delete-category="deleteCategory"
     @delete-routine="deleteRoutine"
-    @delete-task="deleteRoutineTask"/>
+    @delete-task="deleteRoutineTask"
+    @edit-routine="startEditingRoutine"/>
   </div>
 </template>
 
@@ -77,15 +80,19 @@ const {
   deleteTask,
   uid,
   tasks,
+  saveTasks,
 } = useTasks();
 
 const {
   categories,
   showRoutineForm,
+  editingRoutine,
+  editingCategoryName,
   saveCategories,
   loadCategories,
   findOrCreateCategory,
   handleRoutineSave,
+  startEditingRoutine,
   deleteCategory,
   deleteRoutine,
   deleteRoutineTask,

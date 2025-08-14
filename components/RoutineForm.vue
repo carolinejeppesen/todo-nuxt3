@@ -1,30 +1,61 @@
 <script setup>
-const emit = defineEmits(['save', 'cancel'])
+const props = defineProps({
+  editingRoutine: { type: Object, default: null },
+  editingCategoryName: { type: String, default: "" },
+});
 
-const categoryName = ref()
-const routineName = ref('')
-const taskTexts = ref([''])
+const emit = defineEmits(["save", "cancel"]);
 
-const addTaskField = () => taskTexts.value.push('')
+const categoryName = ref(props.editingCategoryName || '');
+const routineName = ref(props.editingRoutine?.name || '');
+const taskTexts = ref(props.editingRoutine ? props.editingRoutine.tasks.map(t => t.text) : ['']);
+
+// Watch for prop changes to update the form when editing
+watch(() => props.editingRoutine, (newRoutine) => {
+  if (newRoutine) {
+    categoryName.value = props.editingCategoryName || '';
+    routineName.value = newRoutine.name || '';
+    taskTexts.value = newRoutine.tasks.map(t => t.text);
+  } else {
+    categoryName.value = '';
+    routineName.value = '';
+    taskTexts.value = [''];
+  }
+}, { immediate: true });
+
+watch(() => props.editingCategoryName, (newCategoryName) => {
+  if (newCategoryName) {
+    categoryName.value = newCategoryName;
+  }
+});
+
+const addTaskField = () => taskTexts.value.push("");
 const removeTaskField = (i) => {
-  taskTexts.value.splice(i, 1)
-  if (taskTexts.value.length === 0) taskTexts.value.push('')
-}
+  taskTexts.value.splice(i, 1);
+  if (taskTexts.value.length === 0) taskTexts.value.push("");
+};
 
 const onSave = () => {
-  emit('save', {
+  emit("save", {
     categoryName: categoryName.value,
     routineName: routineName.value,
-    taskTexts: taskTexts.value
-  })
-  categoryName.value = ''
-  routineName.value = ''
-  taskTexts.value = ['']
-}
+    taskTexts: taskTexts.value,
+    isEditing: !!props.editingRoutine,
+    routineId: props.editingRoutine?.id,
+  });
+  if (!props.editingRoutine) {
+    categoryName.value = "";
+    routineName.value = "";
+    taskTexts.value = [""];
+  }
+};
+
 </script>
 
 <template>
   <div class="mt-4 p-4 border rounded space-y-3">
+    <h3 v-if="editingRoutine" class="text-lg font-semibold">Edit Routine</h3>
+    <h3 v-else class="text-lg font-semibold">Add Routine Template</h3>
     <div class="grid gap-2">
       <input
         v-model="categoryName"
@@ -39,11 +70,7 @@ const onSave = () => {
     </div>
 
     <div class="space-y-2">
-      <div
-        v-for="(t, i) in taskTexts"
-        :key="i"
-        class="flex items-center gap-2"
-      >
+      <div v-for="(t, i) in taskTexts" :key="i" class="flex items-center gap-2">
         <input
           v-model="taskTexts[i]"
           class="flex-1 border rounded px-3 py-2"
@@ -54,7 +81,9 @@ const onSave = () => {
           @click="removeTaskField(i)"
           :disabled="taskTexts.length === 1"
           title="Remove this task"
-        >−</button>
+        >
+          −
+        </button>
       </div>
 
       <button class="mt-1 px-3 py-1 border rounded" @click="addTaskField">
@@ -63,8 +92,12 @@ const onSave = () => {
     </div>
 
     <div class="flex gap-2">
-      <button class="bg-green-300 px-3 py-1 rounded" @click="onSave">Save routine</button>
-      <button class="px-3 py-1 border rounded" @click="$emit('cancel')">Cancel</button>
+      <button class="bg-green-300 px-3 py-1 rounded" @click="onSave">
+        {{ editingRoutine ? 'Update routine' : 'Save routine' }}
+      </button>
+      <button class="px-3 py-1 border rounded" @click="$emit('cancel')">
+        Cancel
+      </button>
     </div>
   </div>
 </template>

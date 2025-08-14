@@ -3,7 +3,7 @@ const props = defineProps({
   categories: { type: Array, required: true },
 });
 
-const emit = defineEmits(["add-to-today"]);
+const emit = defineEmits(["add-to-today", "edit-routine", "delete-category", "delete-routine", "delete-task"]);
 </script>
 
 <template>
@@ -29,6 +29,12 @@ const emit = defineEmits(["add-to-today"]);
             title="Delete routine"
           >
             Delete routine
+          </button>
+          <button
+            @click="$emit('edit-routine', cat.id, routine.id)"
+            class="ml-2 px-3 py-1 bg-gray-200 rounded"
+            title="Edit routine">
+            Edit routine
           </button>
           <div class="flex items-center justify-between">
             <div class="font-medium">{{ routine.name }}</div>
