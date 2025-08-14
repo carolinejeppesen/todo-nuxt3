@@ -28,8 +28,8 @@
               {{ activeTasksSorted.length }}
             </span>
           </h2>
-          <div class="rounded-2xl border border-blue-100 overflow-hidden">
-            <ul class="divide-y divide-blue-100">
+          <div class="rounded-2xl border border-gray-00 overflow-hidden">
+            <ul class="divide-y divide-gray-200">
               <TaskRow
                 v-for="task in activeTasksSorted"
                 :key="task.id"
