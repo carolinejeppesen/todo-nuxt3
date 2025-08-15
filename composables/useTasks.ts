@@ -9,8 +9,8 @@ interface Task {
 }
 
 export const useTasks = () => {
-  const tasks = ref<Task[]>([]);
-  const newTask = ref("");
+const tasks = ref<Task[]>([]); 
+ const newTask = ref("");
 
   const uid = (): string =>
     Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
@@ -127,10 +127,10 @@ export const useTasks = () => {
   return {
     tasks,
     newTask,
-    activeTasksSorted,
-    finishedTasksSorted,
     todayActiveTasks,
     todayFinishedTasks,
+    tomorrowActiveTasks,
+    tomorrowFinishedTasks,
     addTask,
     deleteTask,
     editTask,
