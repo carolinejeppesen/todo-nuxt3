@@ -1,13 +1,45 @@
 <template>
-  <div>
-    
+  <div class="mb-8">
+    <h2 class="text-2xl font-normal text-gray-800 mb-4 flex items-center gap-2">
+      {{ title }}
+      <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-medium">
+        {{ tasks.length }}
+      </span>
+    </h2>
+    <div class="bg-white/40 rounded-2xl border border-blue-100 overflow-hidden">
+      <ul v-if="tasks.length > 0" class="divide-y divide-blue-50">
+        <TaskRow
+          v-for="task in tasks"
+          :key="task.id"
+          :task="task"
+          @toggle="$emit('toggle', $event)"
+          @edit="$emit('edit', $event)"
+          @doneEditing="$emit('doneEditing', $event)"
+          @delete="$emit('delete', $event)"
+        />
+      </ul>
+      <p v-else class="text-blue-300 text-center py-6 italic">
+        {{ emptyMessage }}
+      </p>
+    </div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+const props = defineProps({
+  tasks: {
+    type: Array,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  emptyMessage: {
+    type: String,
+    default: 'No completed tasks yet'
+  }
+})
 
+const emit = defineEmits(['toggle', 'edit', 'doneEditing', 'delete'])
 </script>
-
-<style>
-
-</style>
