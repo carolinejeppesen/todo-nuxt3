@@ -1,6 +1,6 @@
 <template>
   <div class="mb-8">
-    <h2 class="text-2xl font-medium text-gray-800 mb-4 flex items-center gap-2">
+    <h2 class="text-2xl font-normal text-gray-800 mb-4 flex items-center gap-2">
       {{ title }}
       <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
         {{ tasks.length }}
@@ -18,7 +18,7 @@
           @delete="$emit('delete', $event)"
         />
       </ul>
-      <p v-else class="text-blue-400 text-center py-8 italic">
+      <p v-else class="text-blue-300 text-center py-8 italic">
         {{ emptyMessage }}
       </p>
     </div>
