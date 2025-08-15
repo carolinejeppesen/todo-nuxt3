@@ -16,7 +16,15 @@
           @doneEditing="doneEditing"
           @delete="deleteTask"
         />
-        <CompletedTasksList :tasks="todayFinishedTasks" title="Completed Today" />
+        <CompletedTasksList 
+        :tasks="todayFinishedTasks" 
+        title="Completed Today"
+        empty-message="No completed tasks"
+        @toggle="toggleDone"
+        @edit="editTask""
+        @doneEditing="doneEditing"
+        @delete="deleteTask"
+         />
       </div>
     </div>
   </div>
