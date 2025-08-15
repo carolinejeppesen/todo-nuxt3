@@ -42,9 +42,32 @@ export const useTasks = () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     return tomorrow.toLocaleDateString("en-gb")
   }
+// TODAY TASKS
+  const todayActiveTasks = computed(() => {
+    return tasks.value.filter(t => t.taskDate === getTodayDate() && !t.done)
+      .sort((a, b) => b.createdAt - a.createdAt);
+  });
+
+    const todayFinishedTasks = computed(() => {
+    return tasks.value.filter(t => t.taskDate === getTodayDate() && t.done)
+      .sort((a, b) => b.createdAt - a.createdAt);
+  });
 
   const todayTasksSorted = computed(() => {
     return tasks.value.filter(t => t.taskDate === getTodayDate() && !t.done)
+      .sort((a, b) => b.createdAt - a.createdAt);
+  });
+
+  // TOMORROW TASKS
+  const tomorrowActiveTasks = computed(() => {
+  return tasks.value
+    .filter(t => t.taskDate === getTomorrowDate() && !t.done)
+    .sort((a, b) => b.createdAt - a.createdAt);
+  });
+
+  const tomorrowFinishedTasks = computed(() => {
+    return tasks.value
+      .filter(t => t.taskDate === getTomorrowDate() && t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
@@ -98,7 +121,6 @@ export const useTasks = () => {
     tasks.value = JSON.parse(saved);
   };
 
-  // Auto-save on changes
   watch(tasks, saveTasks, { deep: true });
   onMounted(loadTasks);
 
@@ -107,6 +129,8 @@ export const useTasks = () => {
     newTask,
     activeTasksSorted,
     finishedTasksSorted,
+    todayActiveTasks,
+    todayFinishedTasks,
     addTask,
     deleteTask,
     editTask,
