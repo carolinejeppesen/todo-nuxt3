@@ -21,7 +21,7 @@
         title="Completed Early"
         empty-message="No completed tasks"
         @toggle="toggleDone"
-        @edit="editTask""
+        @edit="editTask"
         @doneEditing="doneEditing"
         @delete="deleteTask"
          />
