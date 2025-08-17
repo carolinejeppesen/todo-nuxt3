@@ -4,7 +4,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  "add-to-today",
+  "add-routine",
   "edit-routine",
   "delete-category",
   "delete-routine",
@@ -14,10 +14,7 @@ const emit = defineEmits([
 
 <template>
   <div class="mt-6 space-y-6">
-    <div
-      v-for="cat in categories"
-      :key="cat.id"
-          >
+    <div v-for="cat in categories" :key="cat.id">
       <div class="py-4 border-b border-gray-200">
         <div class="flex items-center justify-between group">
           <h3 class="text-xl font-medium text-gray-800 flex items-center gap-2">
@@ -45,7 +42,9 @@ const emit = defineEmits([
             :key="routine.id"
             class="border border-gray-200 rounded-xl group"
           >
-            <div class="flex items-center justify-between border-b border-gray-200 p-3">
+            <div
+              class="flex items-center justify-between border-b border-gray-200 p-3"
+            >
               <div class="flex-1">
                 <div class="flex items-center gap-3">
                   <h4 class="font-medium text-gray-800 text-lg break-words">
@@ -59,10 +58,12 @@ const emit = defineEmits([
                 </div>
               </div>
 
-              <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div
+                class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
                 <button
                   class="hover:bg-green-100 px-3 py-2 rounded-lg transition-all duration-200"
-                  @click="$emit('add-to-today', routine)"
+                  @click="$emit('add-routine', routine)"
                 >
                   ➕
                 </button>

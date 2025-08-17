@@ -9,15 +9,16 @@ interface Task {
 }
 
 export const useTasks = () => {
-const tasks = ref<Task[]>([]); 
- const newTask = ref("");
+  const tasks = ref<Task[]>([]);
+  const newTask = ref("");
 
   const uid = (): string =>
     Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 
   const addTask = (todayOrTomorrow: string) => {
     const text = newTask.value.trim();
-    const dueDate = todayOrTomorrow === 'today' ? getTodayDate() : getTomorrowDate();
+    const dueDate =
+      todayOrTomorrow === "today" ? getTodayDate() : getTomorrowDate();
     if (!text) return;
     tasks.value.push({
       id: uid(),
@@ -26,7 +27,7 @@ const tasks = ref<Task[]>([]);
       editing: false,
       createdAt: Date.now(),
       completedAt: null,
-      taskDate: dueDate
+      taskDate: dueDate,
     });
     newTask.value = "";
     saveTasks();
@@ -34,57 +35,51 @@ const tasks = ref<Task[]>([]);
 
   const getTodayDate = () => {
     const today = new Date();
-    return today.toLocaleDateString("en-gb")
-  }
+    return today.toLocaleDateString("en-gb");
+  };
 
   const getTomorrowDate = () => {
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow.toLocaleDateString("en-gb")
-  }
-// TODAY TASKS
+    return tomorrow.toLocaleDateString("en-gb");
+  };
+  // TODAY TASKS
   const todayActiveTasks = computed(() => {
-    return tasks.value.filter(t => t.taskDate === getTodayDate() && !t.done)
+    return tasks.value
+      .filter((t) => t.taskDate === getTodayDate() && !t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
-    const todayFinishedTasks = computed(() => {
-    return tasks.value.filter(t => t.taskDate === getTodayDate() && t.done)
+  const todayFinishedTasks = computed(() => {
+    return tasks.value
+      .filter((t) => t.taskDate === getTodayDate() && t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
   const todayTasksSorted = computed(() => {
-    return tasks.value.filter(t => t.taskDate === getTodayDate() && !t.done)
+    return tasks.value
+      .filter((t) => t.taskDate === getTodayDate() && !t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
   // TOMORROW TASKS
   const tomorrowActiveTasks = computed(() => {
-  return tasks.value
-    .filter(t => t.taskDate === getTomorrowDate() && !t.done)
-    .sort((a, b) => b.createdAt - a.createdAt);
+    return tasks.value
+      .filter((t) => t.taskDate === getTomorrowDate() && !t.done)
+      .sort((a, b) => b.createdAt - a.createdAt);
   });
 
   const tomorrowFinishedTasks = computed(() => {
     return tasks.value
-      .filter(t => t.taskDate === getTomorrowDate() && t.done)
+      .filter((t) => t.taskDate === getTomorrowDate() && t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
   const tomorrowTasksSorted = computed(() => {
-    return tasks.value.filter(t => t.taskDate === getTomorrowDate() && !t.done)
+    return tasks.value
+      .filter((t) => t.taskDate === getTomorrowDate() && !t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
-
-  const activeTasksSorted = computed(() =>
-    tasks.value.filter((t) => !t.done).sort((a, b) => b.createdAt - a.createdAt)
-  );
-
-  const finishedTasksSorted = computed(() =>
-    tasks.value
-      .filter((t) => t.done)
-      .sort((a, b) => (b.completedAt ?? 0) - (a.completedAt ?? 0))
-  );
 
   const deleteTask = (id: string) => {
     tasks.value = tasks.value.filter((t) => t.id !== id);
@@ -138,5 +133,7 @@ const tasks = ref<Task[]>([]);
     toggleDone,
     uid,
     saveTasks,
+    getTodayDate,
+    getTomorrowDate,
   };
 };
