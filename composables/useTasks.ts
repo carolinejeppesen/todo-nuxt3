@@ -8,10 +8,10 @@ interface Task {
   taskDate: string;
 }
 
-export const useTasks = () => {
-  const tasks = ref<Task[]>([]);
-  const newTask = ref("");
+const tasks = ref<Task[]>([]);
+const newTask = ref("");
 
+export const useTasks = () => {
   const uid = (): string =>
     Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 
