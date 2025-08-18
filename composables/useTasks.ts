@@ -56,12 +56,6 @@ export const useTasks = () => {
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
-  const todayTasksSorted = computed(() => {
-    return tasks.value
-      .filter((t) => t.taskDate === getTodayDate() && !t.done)
-      .sort((a, b) => b.createdAt - a.createdAt);
-  });
-
   // TOMORROW TASKS
   const tomorrowActiveTasks = computed(() => {
     return tasks.value
@@ -72,12 +66,6 @@ export const useTasks = () => {
   const tomorrowFinishedTasks = computed(() => {
     return tasks.value
       .filter((t) => t.taskDate === getTomorrowDate() && t.done)
-      .sort((a, b) => b.createdAt - a.createdAt);
-  });
-
-  const tomorrowTasksSorted = computed(() => {
-    return tasks.value
-      .filter((t) => t.taskDate === getTomorrowDate() && !t.done)
       .sort((a, b) => b.createdAt - a.createdAt);
   });
 
