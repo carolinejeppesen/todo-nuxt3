@@ -12,7 +12,6 @@ const taskTexts = ref(
   props.editingRoutine ? props.editingRoutine.tasks.map((t) => t.text) : [""]
 );
 
-// Watch for prop changes to update the form when editing
 watch(
   () => props.editingRoutine,
   (newRoutine) => {
@@ -58,14 +57,12 @@ const onSave = () => {
     taskTexts.value = [""];
   }
 };
-
-const showModal = ref(false);
 </script>
 
 <template>
   <div class="mt-6 bg-white/60 rounded-2xl p-6 border border-blue-100">
     <h3 class="text-xl font-medium text-gray-800 mb-6">
-      {{ editingRoutine ? "Edit Routine" : "Add Routine Template" }}
+      {{ editingRoutine ? "Edit Routine" : "Create Routine" }}
     </h3>
 
     <div class="space-y-4 mb-6">
