@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-sky-50">
+  <div class="min-h-screen bg-sky-50">
     <div class="max-w-4xl mx-auto p-8">
       <div
         class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-blue-100 p-8"
@@ -9,7 +9,6 @@
           placeholder="Add a task for today..."
           @add-task="handleAddTask"
         />
-        <RoutineList target-date="today" />
         <ActiveTasksList
           :tasks="todayActiveTasks"
           title="Current Tasks"
@@ -28,6 +27,7 @@
           @doneEditing="doneEditing"
           @delete="deleteTask"
         />
+        <RoutineList target-date="today" />
       </div>
     </div>
   </div>
