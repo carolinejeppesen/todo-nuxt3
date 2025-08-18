@@ -125,7 +125,7 @@ const onSave = () => {
 
     <div class="flex gap-3 pt-4 border-t border-blue-100">
       <button
-        class="flex-1 bg-green-400 text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 transform hover:scale-105"
+        class="flex-1 bg-green-100 text-green-600 rounded-xl px-6 py-3 font-medium transition-all duration-200 transform hover:scale-105"
         @click="onSave"
       >
         {{ editingRoutine ? "Update routine" : "Save routine" }}

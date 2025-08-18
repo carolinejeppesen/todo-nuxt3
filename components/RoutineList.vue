@@ -10,15 +10,15 @@
     </div>
 
     <div v-if="!collapsed">
-      <h2 class="text-2xl mt-8 mb-4 font-medium text-gray-800 flex-1">
-        Routine Templates
-      </h2>
-      <button
-        class="bg-pink-300 text-white rounded-xl px-6 py-3 font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
-        @click="showRoutineForm = !showRoutineForm"
-      >
-        {{ showRoutineForm ? "Close form" : "Create" }}
-      </button>
+      <div class="flex items-center justify-normal mt-8 mb-4 gap-x-2">
+        <h2 class="text-2xl font-medium text-gray-800">Routines Templates</h2>
+        <button
+          class="bg-green-100 px-3 py-2 rounded-full text-sm font-medium text-green-600"
+          @click="showRoutineForm = !showRoutineForm"
+        >
+          {{ showRoutineForm ? "Close" : "Add" }}
+        </button>
+      </div>
 
       <Teleport to="body">
         <div

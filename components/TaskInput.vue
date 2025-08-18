@@ -9,7 +9,7 @@
       />
       <button
         @click="addTask"
-        class="bg-pink-300 text-white rounded-xl px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
+        class="bg-green-100 text-green-600 rounded-xl px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
       >
         Add
       </button>
@@ -18,27 +18,27 @@
 </template>
 
 <script setup>
-  const props = defineProps({
-    dateType: {
-      type: String,
-      required: true,
-      validator: (value) => ['today', 'tomorrow'].includes(value)
-    },
-    placeholder: {
-      type: String,
-      default: 'Add a new todo...'
-    }
-  })
+const props = defineProps({
+  dateType: {
+    type: String,
+    required: true,
+    validator: (value) => ["today", "tomorrow"].includes(value),
+  },
+  placeholder: {
+    type: String,
+    default: "Add a new todo...",
+  },
+});
 
-  const emit = defineEmits(['add-task'])
+const emit = defineEmits(["add-task"]);
 
-  const newTask = ref('')
+const newTask = ref("");
 
-  const addTask = () => {
-    const text = newTask.value.trim()
-    if (!text) return
+const addTask = () => {
+  const text = newTask.value.trim();
+  if (!text) return;
 
-    emit('add-task', text, props.dateType)
-    newTask.value = ''
-  }
+  emit("add-task", text, props.dateType);
+  newTask.value = "";
+};
 </script>

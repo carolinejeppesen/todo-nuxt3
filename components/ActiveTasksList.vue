@@ -2,7 +2,9 @@
   <div class="mb-8">
     <h2 class="text-2xl font-normal text-gray-800 mb-4 flex items-center gap-2">
       {{ title }}
-      <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
+      <span
+        class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm font-medium"
+      >
         {{ tasks.length }}
       </span>
     </h2>
@@ -29,17 +31,17 @@
 const props = defineProps({
   tasks: {
     type: Array,
-    required: true
+    required: true,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   emptyMessage: {
     type: String,
-    default: 'No active tasks yet'
-  }
-})
+    default: "No active tasks yet",
+  },
+});
 
-const emit = defineEmits(['toggle', 'edit', 'doneEditing', 'delete'])
+const emit = defineEmits(["toggle", "edit", "doneEditing", "delete"]);
 </script>
