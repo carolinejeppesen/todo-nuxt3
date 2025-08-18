@@ -2,7 +2,7 @@
   <div class="mb-8">
     <div class="flex items-center gap-2">
       <button
-        class="bg-pink-300 text-white rounded-xl px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
+        class="bg-pink-100 text-pink-600 rounded-xl px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
         @click="collapsed = !collapsed"
       >
         {{ collapsed ? "Routines" : "Hide Routines" }}
